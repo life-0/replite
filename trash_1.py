@@ -23,15 +23,16 @@ print(re.sub(u"\\(.*?）|", "", str_2))
 # match_music = musicName[:musicName.find('-')]  # 从左往右 只要到第一个"-" 视为歌名
 # match_author = musicName[musicName.rfind('-'):]  # 从右往左 只要到第一个"-" 视为作者
 # match_author_music = match_music + match_author  # 匹配值: 歌名-作者
-str_3 = "防弹少年团 - 春日(feat. _SS_ROU)(FRANKOWO Remix)中文改词版 - Frank_Jiang"
-str_4 = "Frank_Jiang _SS_ROU AEllse - 防弹少年团 - 春日(feat. _SS_ROU)(FRANKOWO Remix)中文改词版"
-str_3 = re.sub(u"\\(.*?\\)|\\(.*?）|\\（.*?\\)|\\{.*?}|\\[.*?]|（.*?）|《.*?》|\s|/|\.|&|\\\|:|_", "", str_3)
-str_4 = re.sub(u"\\(.*?\\)|\\(.*?）|\\（.*?\\)|\\{.*?}|\\[.*?]|（.*?）|《.*?》|\s|/|\.|&|\\\|:|_", "", str_4)
-str_3_match = re.split("-", str_3)
-str_4_matched = re.split("-", str_4)
+str_3 = "The Nights (UK Version) - Avicii"
+str_4 = "The Nights-Avicii Nicholas Furlong"
+# str_3 = re.sub(u"\\(.*?\\)|\\(.*?）|\\（.*?\\)|\\{.*?}|\\[.*?]|（.*?）|《.*?》|\s|/|\.|&|\\\|:|_", "", str_3)
+# str_4 = re.sub(u"\\(.*?\\)|\\(.*?）|\\（.*?\\)|\\{.*?}|\\[.*?]|（.*?）|《.*?》|\s|/|\.|&|\\\|:|_", "", str_4)
+
+str_3_split = re.split(r'[\s.、&:_\\/ ()（）-]', str_3)
+str_4_split = re.split(r'[\s.、&:_\\/ ()（）-]', str_4)
 Degree = 0  # 匹配成功个数
-for matched in str_4_matched:
-    for match in str_3_match:
+for matched in str_3_split:
+    for match in str_4_split:
         if difflib.SequenceMatcher(None, matched.lower(), match.lower()).quick_ratio() > 0.85:
             Degree += 1
 print(Degree)
@@ -44,6 +45,7 @@ TheNights-AviciiNicholasFurlong
 The Nights (UK Version) - Avicii=F:/缓存音乐/Music1/The Nights (UK Version) - Avicii.flac=22.01817035675049
 WakeMeUp-AviciiAloeBlacc
 Wake Me Up - Avicii=F:/缓存音乐/Music1/Wake Me Up - Avicii.flac=30.364601135253906
+
 PIANORenovation-DAISHIDANCE吉田兄弟
 
 Champion-BarnsCourtney
@@ -60,3 +62,14 @@ Frank_Jiang _SS_ROU AEllse - 防弹少年团 - 春日(feat. _SS_ROU)(FRANKOWO 
 刚好遇见你-风小筝
 青玉案-云の泣
 """
+key_value = {}
+key_value[2] = [56, 'sjid', 55]
+key_value[1] = [2, 'sj56465', 33]
+key_value[5] = [12, '654654', 1]
+key_value[4] = [24, 'sadas', 10]
+key_value[6] = [18, '546', 16]
+key_value[3] = [323, 'sadsada', 13]
+print(key_value.values())
+print(max(key_value.values())[0])
+if 0.46516 > 0.32654894198:
+    print("123")
