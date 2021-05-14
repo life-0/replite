@@ -2,7 +2,7 @@ A Sky Full Of Stars - Coldplay=F:/缓存音乐/A Sky Full Of Stars - Coldplay.fl
 Borherhood=F:/缓存音乐/Borherhood.mp3=3.724132537841797
 Borherhood.mp3 44100=F:/缓存音乐/Borherhood.mp3 44100.cfa=82.5
 Borherhood.mp3 44100=F:/缓存音乐/Borherhood.mp3 44100.pek=0.3223304748535156
-champion=F:/缓存音乐/champion.mp3=2.905813217163086
+Champion - Barns Courtney=F:/缓存音乐/Champion - Barns Courtney.mp3=7.305239677429199
 Ephemeral Memories - MoreanP=F:/缓存音乐/Ephemeral Memories - MoreanP.flac=22.81706428527832
 Frank_Jiang - 清明雨上（FRANKOWO Bootleg）=F:/缓存音乐/Frank_Jiang - 清明雨上（FRANKOWO Bootleg）.mp3=4.943521499633789
 Goose house (グースハウス) - 何もかも有り余っている こんな時代も (即便是这个所有一切都显得多余的时代) (Goose house Live House Tour 2017.11.22 TOKYO)=F:/缓存音乐/Goose house (グースハウス) - 何もかも有り余っている こんな時代も (即便是这个所有一切都显得多余的时代) (Goose house Live House Tour 2017.11.22 TOKYO).mp3=11.968365669250488
@@ -167,7 +167,6 @@ Cam Kelley - Sketch Plane=F:/缓存音乐/Music1/Cam Kelley - Sketch Plane.mp3=8
 Candy_Wind - 青空=F:/缓存音乐/Music1/Candy_Wind - 青空.mp3=7.749573707580566
 Capo Productions - Journey=F:/缓存音乐/Music1/Capo Productions - Journey.mp3=4.160775184631348
 Centuries=F:/缓存音乐/Music1/Centuries.mp3=8.71359920501709
-Champion=F:/缓存音乐/Music1/Champion.mp3=2.906047821044922
 Clare - Forward(Original Mix)=F:/缓存音乐/Music1/Clare - Forward(Original Mix).mp3=5.341455459594727
 Clarv - Freedom=F:/缓存音乐/Music1/Clarv - Freedom.mp3=7.283836364746094
 Cuebrick Karra - Smoke and Fire=F:/缓存音乐/Music1/Cuebrick Karra - Smoke and Fire.mp3=7.4891557693481445
