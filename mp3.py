@@ -12,11 +12,13 @@ import difflib
 
 
 # 获取文件路径
-def findAndInput(path, matchedMusicPath):  # 相对路径
+def findAndInput(path, matchedMusicPath, targetPathFile):  # 相对路径
     matchedMusic = open(matchedMusicPath, encoding="UTF-8-sig")
     matchedMusicLine = matchedMusic.readline()
     matchedMusic_list = {}  # 受匹配的音乐集合
+    success_musicPath_list = []  # 成功匹配到的数据
     matchedKey = 1  # 匹配键
+
     while matchedMusicLine:
         matchedMusicLine = matchedMusicLine.replace(u'\xa0', ' ').replace("\n", "")  # 去除 nbsp的现象
         matchedMusicLine = zhconv.convert(matchedMusicLine, 'zh-hans')  # 将文本转为中文简体 以防万一
@@ -29,7 +31,8 @@ def findAndInput(path, matchedMusicPath):  # 相对路径
         matchedKey += 1
         matchedMusicLine = matchedMusic.readline()
     files = os.listdir(path)  # 获取所有歌单文件
-    # files = ['acivii.txt']
+    # files = ['忧音.txt']
+
     musicCount = 0  # 歌单总个数
     for f in files:
         print("文件名:", f)  # 歌单文件里的数据
@@ -39,9 +42,12 @@ def findAndInput(path, matchedMusicPath):  # 相对路径
             line = line.replace(u'\xa0', ' ').replace('\n', "")  # 去除 nbsp的现象
             targetMusicLine = zhconv.convert(line, 'zh-hans')  # 将目标歌单的数据也转为中文简体 以防万一
             success_path = adaptation(targetMusicLine, matchedMusic_list)  # 文本适配 返回成功匹配到的路径
-
+            if success_path:
+                success_musicPath_list.append(success_path)  # 添加进入列表中
             musicCount += 1
             line = file.readline()
+        outPutM3u(success_musicPath_list, targetPathFile, f)  # 写入
+        success_musicPath_list = []  # 数据清空
     print("匹配次数为:", musicCount)
 
 
@@ -68,13 +74,13 @@ def adaptation(musicName, matchedMusic_list):
         matched_author = matchedValues[matchedValues.rfind('-'):]  # 从右往左 只要到第一个"-" 视为作者
         matched_author_music = matched_music + matched_author  # 匹配值: 歌名-作者
         matchValue = difflib.SequenceMatcher(None, match_musicName.lower(),  # 获得匹配值
-                                             matched_author_music.lower()).ratio()  # matchedValue[0].lower()
+                                             matched_author_music.lower()).quick_ratio()  # matchedValue[0].lower()
 
         if matchValue > 0.4:
             matchFlag += 1  # 确认匹配到数据
             if len(dict_matchDegree) < 4:  # 限定dict_matchDegree个数
                 dict_matchDegree[matchedKey] = [matchValue, match_musicName, matched_author_music, matchedValue[-2:]]
-            elif len(dict_matchDegree) == 4:  # 超过dict_matchDegree个数5后,只保留matchValue最高的数据
+            elif len(dict_matchDegree) == 4:  # 超过dict_matchDegree个数4后,只保留matchValue最高的数据
                 min_matchValue = min(dict_matchDegree.values())[0]
                 if matchValue > min_matchValue:  # 比对匹配最小值进而替换 从而保留匹配度最高的数据
                     key = list(dict_matchDegree.keys())[
@@ -96,18 +102,23 @@ def adaptation(musicName, matchedMusic_list):
         second_match_path = ((second_match_list[-1])[-1])[-2]  # 获取文件路径
         # 匹配度大小比较
         if first_match_degree > second_match_degree:
+            print(first_match_path)
             return first_match_path  # 装入列表
         elif first_match_degree < second_match_degree:
+            print(second_match_path)
             return second_match_path  # 装入列表
         # 匹配度相等的情况
         elif first_match_degree == second_match_degree:
             if first_match_size > second_match_size:
+                print(first_match_path)
                 return first_match_path  # 装入列表
             else:
+                print(second_match_path)
                 return second_match_path  # 装入列表
     elif len(highest_tuple) == 1:
         first_match_list = highest_tuple.pop()
-        first_match_path = (first_match_list[-1])[-2]  # 获取文件路径
+        first_match_path = ((first_match_list[-1])[-1])[-2]  # 获取文件路径
+        print(first_match_path)
         return first_match_path  # 装入列表
     # 未找到的情况
     if matchFlag == 0:
@@ -115,14 +126,21 @@ def adaptation(musicName, matchedMusic_list):
         return False
 
 
-def outputM3u(output):
-    print(output)
+def outPutM3u(music_path_list, targetPath, file):
+    # 写入新文件  防止同名的旧文件影响,从而进行重复追加
+    open(targetPath + '/' + file[:file.rfind(".")] + '.m3u', 'w').close()
+    targetFile = open(targetPath + '/' + file[:file.rfind(".")] + '.m3u', 'a+', encoding='UTF-8-sig')  # 指定写入的目标文件
+    for success in music_path_list:
+        targetFile.write(success)  # 写入目标文件中
+        targetFile.write('\n')
+    targetFile.close()
 
 
 if __name__ == '__main__':
     failedMatch = []
     # matchedMusic_list={}
-    findAndInput('./data', 'MusicPath.txt')  # './t从网易云上扒歌单,在本地配对好数据,生成本地歌单m3u文件rash_data/test_DAISHI DANCE.txt'
+    findAndInput('./data', 'MusicPath.txt',
+                 './m3uFile')  # './t从网易云上扒歌单,在本地配对好数据,生成本地歌单m3u文件rash_data/test_DAISHI DANCE.txt'
     failedMatch = list(dict.fromkeys(failedMatch))
     print("数据未找到个数:", len(failedMatch))
     for i in failedMatch:

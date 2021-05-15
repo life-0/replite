@@ -24,8 +24,8 @@ print(re.sub(u"\\(.*?）|", "", str_2))
 # match_author = musicName[musicName.rfind('-'):]  # 从右往左 只要到第一个"-" 视为作者
 # match_author_music = match_music + match_author  # 匹配值: 歌名-作者
 str_3 = "The Nights (UK Version) - Avicii"
-str_4 = '粘心 - 风小筝'
-str_5 = '上心 - 郑欣宜'
+str_4 = '乱红-陈悦'
+str_5 = '陈悦-乱红'
 
 str_3 = re.sub(u"\\(.*?\\)|\\(.*?）|\\（.*?\\)|\\{.*?}|\\[.*?]|（.*?）|《.*?》|\s|/|\.|&|\\\|:|_", "", str_3)
 str_4 = re.sub(u"\\(.*?\\)|\\(.*?）|\\（.*?\\)|\\{.*?}|\\[.*?]|（.*?）|《.*?》|\s|/|\.|&|\\\|:|_", "", str_4)
@@ -33,9 +33,10 @@ str_5 = re.sub(u"\\(.*?\\)|\\(.*?）|\\（.*?\\)|\\{.*?}|\\[.*?]|（.*?）|《.*
 
 str_3_split = re.split(r'[\s.、&:_\\/ ()（）-]', str_3)
 str_4_split = re.split(r'[\s.、&:_\\/ ()（）-]', str_4)
+print(difflib.SequenceMatcher(None, str_4.lower(), str_5.lower()).quick_ratio())
 
 Degree = 0  # 匹配成功个数
-print(difflib.SequenceMatcher(None, str_4.lower(), str_5.lower()).ratio())
+
 
 for matched in str_3_split:
     for match in str_4_split:
@@ -79,3 +80,6 @@ print(key_value.values())
 print(max(key_value.values())[0])
 if 0.46516 > 0.32654894198:
     print("123")
+
+str_6 = "abd.txt"
+print(str_6[:str_6.rfind(".")])
