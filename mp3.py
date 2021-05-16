@@ -12,7 +12,13 @@ import difflib
 
 
 # 获取文件路径
+
 def findAndInput(path, matchedMusicPath, targetPathFile):  # 相对路径
+    """
+    :param path: 歌单文件夹
+    :param matchedMusicPath: 歌名路径文件
+    :param targetPathFile: 匹配成功后存放的文件路径
+    """
     matchedMusic = open(matchedMusicPath, encoding="UTF-8-sig")
     matchedMusicLine = matchedMusic.readline()
     matchedMusic_list = {}  # 受匹配的音乐集合
@@ -31,7 +37,7 @@ def findAndInput(path, matchedMusicPath, targetPathFile):  # 相对路径
         matchedKey += 1
         matchedMusicLine = matchedMusic.readline()
     files = os.listdir(path)  # 获取所有歌单文件
-    # files = ['忧音.txt']
+    # files = ['acivii.txt']
 
     musicCount = 0  # 歌单总个数
     for f in files:
@@ -51,23 +57,20 @@ def findAndInput(path, matchedMusicPath, targetPathFile):  # 相对路径
     print("匹配次数为:", musicCount)
 
 
-# musicName : 歌单的一行数据 歌名 - 作者名
-# matchedMusic_list : 被匹配的数据集合 歌名 - 作者=路径=文件大小
 def adaptation(musicName, matchedMusic_list):
+    """
+    :param musicName:  歌单的一行数据 歌名 - 作者名
+    :param matchedMusic_list: 被匹配的数据集合 歌名 - 作者=路径=文件大小
+    :return: 返回成功找到的数据 直接给路径
+    """
     match_musicName = re.sub(u"\\(.*?\\)|\\(.*?）|\\（.*?\\)|\\{.*?}|\\[.*?]|（.*?）|《.*?》|\s|/|\.|&|\\\|:|_", "",
                              musicName)
-    # match_music = musicName[:musicName.find('-')]  # 从左往右 只要到第一个"-" 视为歌名
-    # match_author = musicName[musicName.rfind('-'):]  # 从右往左 只要到第一个"-" 视为作者
-    # match_author_music = match_music + match_author  # 匹配值: 歌名-作者
-    # matchName = re.split(r'[\s.、()（）&:_\\/-]',  # "".join(musicName.split()).lower()
-    #                      musicName.lower())  # 一丝不挂 - 陈奕迅 分割文本 好进行匹配
     print(musicName)
     # while "" in matchName:  # 去除列表中的空字符串
     #     matchName.remove("")
     dict_matchDegree = {}  # 只有匹配度最高的5个数据
     matchFlag = 0  # 设置是否匹配到数据
     for matchedKey, matchedValue in matchedMusic_list.items():
-        # print(musicName.lower(),matchedValue[0].lower())
         matchedValues = re.sub(u"\\(.*?\\)|\\(.*?）|\\（.*?\\)|\\{.*?}|\\[.*?]|（.*?）|《.*?》|\s|/|\.|&|\\\|:|_", "",
                                matchedValue[0])
         matched_music = matchedValues[:matchedValues.find('-')]  # 从左往右 只要到第一个"-" 视为歌名
@@ -76,7 +79,7 @@ def adaptation(musicName, matchedMusic_list):
         matchValue = difflib.SequenceMatcher(None, match_musicName.lower(),  # 获得匹配值
                                              matched_author_music.lower()).quick_ratio()  # matchedValue[0].lower()
 
-        if matchValue > 0.4:
+        if matchValue > 0.4:  # 匹配程度必须大于0.4 低于0.4 则匹配不上
             matchFlag += 1  # 确认匹配到数据
             if len(dict_matchDegree) < 4:  # 限定dict_matchDegree个数
                 dict_matchDegree[matchedKey] = [matchValue, match_musicName, matched_author_music, matchedValue[-2:]]
@@ -127,6 +130,11 @@ def adaptation(musicName, matchedMusic_list):
 
 
 def outPutM3u(music_path_list, targetPath, file):
+    """
+    :param music_path_list: 成功匹配上的路径集合
+    :param targetPath: 放入数据的路径
+    :param file: 写入数据的文件名
+    """
     # 写入新文件  防止同名的旧文件影响,从而进行重复追加
     open(targetPath + '/' + file[:file.rfind(".")] + '.m3u', 'w').close()
     targetFile = open(targetPath + '/' + file[:file.rfind(".")] + '.m3u', 'a+', encoding='UTF-8-sig')  # 指定写入的目标文件
@@ -138,10 +146,15 @@ def outPutM3u(music_path_list, targetPath, file):
 
 if __name__ == '__main__':
     failedMatch = []
-    # matchedMusic_list={}
+
     findAndInput('./data', 'MusicPath.txt',
                  './m3uFile')  # './t从网易云上扒歌单,在本地配对好数据,生成本地歌单m3u文件rash_data/test_DAISHI DANCE.txt'
     failedMatch = list(dict.fromkeys(failedMatch))
+    open("./data/failedMatch.txt", 'w').close()
+    failedFile = open("./data/failedMatch.txt", 'a+', encoding='UTF-8-sig')
     print("数据未找到个数:", len(failedMatch))
     for i in failedMatch:
+        failedFile.write(i)
+        failedFile.write('\n')
         print(i)
+    failedFile.close()
