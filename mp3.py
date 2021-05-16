@@ -157,4 +157,5 @@ if __name__ == '__main__':
         failedFile.write(i)
         failedFile.write('\n')
         print(i)
+        
     failedFile.close()
