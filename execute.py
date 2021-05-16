@@ -145,13 +145,13 @@ def outPutM3u(music_path_list, targetPath, file):
 
 
 if __name__ == '__main__':
-    failedMatch = []
-
-    findAndInput('./data', './data/MusicPath.txt',
-                 './m3uFile')  # './t从网易云上扒歌单,在本地配对好数据,生成本地歌单m3u文件rash_data/test_DAISHI DANCE.txt'
+    failedMatch = []  # 匹配失败音乐集合
+    findAndInput('./data', './data/MusicPath.txt', './m3uFile')  # './t从网易云上扒歌单,在本地配对好数据'
     failedMatch = list(dict.fromkeys(failedMatch))
+
     open("./data/failedMatch.txt", 'w').close()
     failedFile = open("./data/failedMatch.txt", 'a+', encoding='UTF-8-sig')
+
     print("数据未找到个数:", len(failedMatch))
     for i in failedMatch:
         failedFile.write(i)
