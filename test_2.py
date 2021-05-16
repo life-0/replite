@@ -28,7 +28,7 @@ def findAndInput(path, matchedMusicPath):  # 相对路径
         matchedKey += 1
         matchedMusicLine = matchedMusic.readline()
     files = os.listdir(path)  # 获取所有歌单文件
-    files = ['DAISHI DANCE.txt']
+    # files = ['DAISHI DANCE.txt']
     musicCount = 0  # 歌单总个数
     for f in files:
         print("文件名:", f)  # 歌单文件里的数据
@@ -89,7 +89,7 @@ def outputM3u():
 
 if __name__ == '__main__':
     failedMatch = []
-    findAndInput('./data', 'MusicPath.txt')
+    findAndInput('./data', './data/MusicPath.txt')
     failedMatch = list(dict.fromkeys(failedMatch))
     print("数据未找到个数:", len(failedMatch))
     for i in failedMatch:

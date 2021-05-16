@@ -147,7 +147,7 @@ def outPutM3u(music_path_list, targetPath, file):
 if __name__ == '__main__':
     failedMatch = []
 
-    findAndInput('./data', 'MusicPath.txt',
+    findAndInput('./data', './data/MusicPath.txt',
                  './m3uFile')  # './t从网易云上扒歌单,在本地配对好数据,生成本地歌单m3u文件rash_data/test_DAISHI DANCE.txt'
     failedMatch = list(dict.fromkeys(failedMatch))
     open("./data/failedMatch.txt", 'w').close()
@@ -157,5 +157,5 @@ if __name__ == '__main__':
         failedFile.write(i)
         failedFile.write('\n')
         print(i)
-        
+
     failedFile.close()

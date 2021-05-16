@@ -57,8 +57,8 @@ def printPath(level, path):
 def writeFile(fileAndPathList):
     global allFileNum
     # 写入新文件
-    open("MusicPath.txt", 'w').close()
-    newFile = open("MusicPath.txt", 'a+', encoding="UTF-8")  # MusicPath.txt文件，没有则创建
+    open("./data/MusicPath.txt", 'w').close()
+    newFile = open("data/MusicPath.txt", 'a+', encoding="UTF-8")  # MusicPath.txt文件，没有则创建
     # 通过遍历keys()来获取所有的键
     for k, v in fileAndPathList.items():
         size = os.path.getsize(v)

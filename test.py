@@ -64,4 +64,4 @@ def adaptation(fileName, targetFilePath):
 
 
 if __name__ == '__main__':
-    findAndInput('./data', 'MusicPath.txt')
+    findAndInput('./data', './data/MusicPath.txt')
