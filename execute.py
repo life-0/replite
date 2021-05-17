@@ -26,13 +26,15 @@ def findAndInput(path, matchedMusicPath, targetPathFile):  # 相对路径
     matchedKey = 1  # 匹配键
 
     while matchedMusicLine:
-        matchedMusicLine = matchedMusicLine.replace(u'\xa0', ' ').replace("\n", "")  # 去除 nbsp的现象
+        # matchedMusicLine = matchedMusicLine.replace(u'\xa0', ' ').replace("\n", "")  # 去除 nbsp的现象
+        matchedMusicLine = matchedMusicLine.replace("\n", "")  # 去除 nbsp的现象
         matchedMusicLine = zhconv.convert(matchedMusicLine, 'zh-hans')  # 将文本转为中文简体 以防万一
         targetAtr = re.split(r'[=]', matchedMusicLine)  # 分割目标文本 : Jam - 七月上=F:/缓存音乐/Music1/Jam - 七月上.mp3
         # Music = re.split(r'[\s.、&:_\\/ ()（）-]', targetAtr[0].lower())  # 切割为歌名 作者名.mp3
         while "" in targetAtr:  # 去除列表中的空字符串
             targetAtr.remove("")
         # targetAtr.pop(0)
+        targetAtr[0] = targetAtr[0].replace(u'\xa0', ' ')  # 仅去除歌名 nbsp的现象,而不是路径的
         matchedMusic_list[matchedKey] = targetAtr
         matchedKey += 1
         matchedMusicLine = matchedMusic.readline()
